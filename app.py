@@ -84,17 +84,20 @@ def index():
 
 
 @app.route('/predict', methods=['POST'])
-def predict(string):
+def predict():
+#def predict(string):
+    string = request.form['message']
     clf = joblib.load('model.pkl')
     count_vect = joblib.load('count_vect.pkl')
     string=detect_flair(string)
     review_text = decontracted(string)
     test_vect = count_vect.transform(([review_text]))
     pred = clf.predict(test_vect)
-
-    return jsonify({'prediction': pred})
+    
+    return render_template('index.html', prediction_text='Employee Salary should be $ {}'.format(pred))
+   # return jsonify({'prediction': pred})
 
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    app.run(debug=True)
