@@ -80,7 +80,7 @@ def hello_world():
 
 @app.route('/index')
 def index():
-    return flask.render_template('index.html')
+    return flask.render_template('home.html')
 
 
 @app.route('/predict', methods=['POST'])
@@ -93,8 +93,8 @@ def predict():
     review_text = decontracted(string)
     test_vect = count_vect.transform(([review_text]))
     pred = clf.predict(test_vect)
-    
-    return render_template('index.html', prediction_text='Employee Salary should be $ {}'.format(pred))
+    print(pred)
+    return flask.render_template('result.html', prediction_text='{}'.format(pred))
    # return jsonify({'prediction': pred})
 
 
