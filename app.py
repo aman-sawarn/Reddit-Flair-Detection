@@ -10,10 +10,19 @@ from bs4 import BeautifulSoup
 import re
 from sklearn.feature_extraction.text import CountVectorizer
 import praw
+import os
+import json
+
+#file upload library
+from werkzeug import secure_filename
 
 # https://www.tutorialspoint.com/flask
 import flask
 app = Flask(__name__)
+UPLOAD_FOLDER = '/uploads'
+ALLOWED_EXTENSIONS = {'txt'}
+app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd() , "uploads")
+app.config['ALLOWED_EXTENSIONS'] = ALLOWED_EXTENSIONS
 
 reddit = praw.Reddit(client_id='xqxZ6WzL6TC_PA', client_secret='DGlby5_lzNhqc6BkXOxfQgdxa3Y',
                      user_agent='Flair_Detector', username='Aman_Sawarn', password='izgNzhU87c$SmhT')
@@ -72,10 +81,19 @@ def detect_flair(url):
     return data['combine']
 ###################################################
 
+def predictSingle(string):
+    clf = joblib.load('model.pkl')
+    count_vect = joblib.load('count_vect.pkl')
+    review_text = decontracted(string)
+#     print(review_text)
+    test_vect = count_vect.transform(([review_text]))
+    pred = clf.predict(test_vect)
+
+    return pred
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    return 'Please make a POST request at /automated_testing with a text file containing URLs!'
 
 
 @app.route('/index')
@@ -96,6 +114,38 @@ def predict():
     print(pred)
     return flask.render_template('result.html', prediction_text='{}'.format(pred))
    # return jsonify({'prediction': pred})
+
+@app.route('/automated_testing' , methods=['POST'])
+def test():
+    file = flask.request.files['file']
+    fileName = secure_filename(file.filename)
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
+    f = open(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
+    textTostring = f.read().split("\n")
+    fileResponse = {}
+    for oneString in textTostring:
+        if not len(oneString)<8:
+            print(oneString)
+            print(predictSingle(detect_flair(oneString)))
+            fileResponse[oneString] = predictSingle(detect_flair(oneString))
+    return  json.dumps(fileResponse, cls=NumpyArrayEncoder)
+
+
+# https://pynative.com/python-serialize-numpy-ndarray-into-json/
+class NumpyArrayEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return JSONEncoder.default(self, obj)
+
+
+
+
+
+@app.route('/test' , methods = ['GET'])
+def testGet():
+    return flask.render_template('test.html')
+
 
 
 

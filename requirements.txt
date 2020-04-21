@@ -12,3 +12,4 @@ nltk>=3.3
 praw>=6.5.1
 regex==2018.7.11
 beautifulsoup4==4.6.0
+werkzeug==0.14.1
