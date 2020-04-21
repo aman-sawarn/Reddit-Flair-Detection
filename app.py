@@ -142,7 +142,7 @@ class NumpyArrayEncoder(json.JSONEncoder):
 
 
 
-@app.route('/test' , methods = ['GET'])
+@app.route('/automated_testing' , methods = ['GET'])
 def testGet():
     return flask.render_template('test.html')
 
