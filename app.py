@@ -127,7 +127,7 @@ def test():
         if not len(oneString)<8:
             print(oneString)
             print(predictSingle(detect_flair(oneString)))
-            fileResponse[oneString] = predictSingle(detect_flair(oneString))
+            fileResponse[oneString] = predictSingle(detect_flair(oneString))[0]
     return  json.dumps(fileResponse, cls=NumpyArrayEncoder)
 
 
