@@ -30,3 +30,13 @@ Given a Reddit URL, predict Flairs from it
 ### Link to Heroku App
 https://reddit-flair-detector-aman.herokuapp.com/index
 
+### Links used to upload a .txt file which has URLs
+
+https://flask.palletsprojects.com/en/1.1.x/patterns/fileuploads/
+https://www.tutorialspoint.com/flask/flask_file_uploading.htm
+
+### Convert Dict to JSON
+
+https://stackoverflow.com/questions/52033852/python-flask-how-to-convert-a-dictionary-object-to-json
+
+
