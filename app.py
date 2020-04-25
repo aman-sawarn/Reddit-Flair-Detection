@@ -117,7 +117,8 @@ def predict():
 
 @app.route('/automated_testing' , methods=['POST'])
 def test():
-    file = flask.request.files['file']
+    print(flask.request.files)
+    file = flask.request.files['upload_file']
     fileName = secure_filename(file.filename)
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
     f = open(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
