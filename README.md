@@ -1,7 +1,10 @@
 # Reddit-Flair-Detection
 ## Problem Statement
 Given a Reddit URL, predict Flairs from it
-
+## Check URL to see deployed application
+https://reddit-flair-detector-aman.herokuapp.com/index
+## URL for automated testing
+https://reddit-flair-detector-aman.herokuapp.com/automated_testing
 ## Approach to solve the Problem
 1. Scrap data from reddit using the reddit Praw API
 2. Perform EDA on it and Understand data
