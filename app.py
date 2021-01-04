@@ -24,8 +24,8 @@ ALLOWED_EXTENSIONS = {'txt'}
 app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd() , "uploads")
 app.config['ALLOWED_EXTENSIONS'] = ALLOWED_EXTENSIONS
 
-reddit = praw.Reddit(client_id='xqxZ6WzL6TC_PA', client_secret='DGlby5_lzNhqc6BkXOxfQgdxa3Y',
-                     user_agent='Flair_Detector', username='Aman_Sawarn', password='izgNzhU87c$SmhT')
+reddit = praw.Reddit(client_id='#', client_secret='#',
+                     user_agent='#', username='Aman_Sawarn', password='#')
 
 ###################################################
 def decontracted(phrase):
